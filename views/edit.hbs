@@ -1,0 +1,10 @@
+<form action="/gallery/{{photo.id}}/?_method=PUT" method="POST">
+  <img src="{{photo.link}}" alt=""><br>
+  Author: <br>
+  <input type="text" placeholder="name" name="author" autocomplete="off" value={{photo.author}} /><br>
+  Link: <br>
+  <input type="text" placeholder="url" name="link" autocomplete="off" value="{{photo.link}}" /><br>
+  Description: <br>
+  <textarea name="description" id="" cols="30" rows="10" autocomplete="off" />{{photo.description}}</textarea><br>
+  <input type="submit" value="Post Photo">
+</form>
