@@ -19,6 +19,15 @@ const hbs = handlebars.create({
 
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
+app.use(bodyParser.urlencoded({ extended: true}));
+app.use(methodOverride('_method'));
+app.use(cookieParser('keyboard cat'));
+app.use(session({ secret: 'yes'}));
+app.use(flash());
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
 
 app.get('/', (req, res) => {
   Gallery.findAll()
@@ -28,17 +37,6 @@ app.get('/', (req, res) => {
 });
 
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true}));
-app.use(methodOverride('_method'));
-
-app.use(cookieParser('keyboard cat'));
-app.use(session({ secret: 'yes'}));
-app.use(flash());
-
-app.use(function (req, res, next) {
-  res.locals.messages = require('express-messages')(req, res);
-  next();
-});
 
 app.use('/gallery', gallery);
 
