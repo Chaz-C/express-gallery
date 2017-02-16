@@ -14,12 +14,16 @@ function errorMsg(req, res, err) {
 router.get('/', (req, res) => {
   Gallery.findAll()
   .then(function(photos) {
-    res.render('index', { photos : photos });
+    res.render('index', {
+      photos : photos
+    });
   });
 });
 
 router.get('/new', (req, res) => {
-  res.render('new.hbs', { messages: res.locals.messages() });
+  res.render('new.hbs', {
+    messages: res.locals.messages()
+  });
 });
 
 router.post('/', (req, res) => {
@@ -32,7 +36,6 @@ router.post('/', (req, res) => {
     res.redirect('/gallery');
   })
   .catch(err => {
-    // req.flash("error-msg", err.errors[0].message);
     errorMsg(req, res, err);
     res.redirect(303, '/gallery/new');
   });
@@ -42,35 +45,49 @@ router.get('/:id', (req, res) => {
   // Gallery.find( { where: { id : `${req.params.id}` } })
   Gallery.findById(`${req.params.id}`)
   .then(function(photo) {
-    res.render('photo', { photo : photo });
+    res.render('photo', {
+      photo : photo
+    });
   });
 });
 
 router.get('/:id/edit', (req, res) => {
   Gallery.findById(`${req.params.id}`)
   .then(function(photo) {
-    res.render('edit', { photo : photo });
+    res.render('edit', {
+      photo : photo,
+      messages: res.locals.messages()
+    });
   });
 });
 
 router.put('/:id', (req, res) => {
-  Gallery.update(
-  {
+  Gallery.update( {
     author: req.body.author,
     link: req.body.link,
     description: req.body.description
-  },
-  { where: { id: `${req.params.id}`}}
+    },
+    { where: {
+        id: `${req.params.id}`
+      }
+    }
   )
   .then(function() {
     res.redirect(303, `/gallery/${req.params.id}`);
+  })
+  .catch(err => {
+    errorMsg(req, res, err);
+    res.redirect(303, `/gallery/${req.params.id}/edit`);
   });
 });
 
 router.delete('/:id', (req, res) => {
-  Gallery.destroy(
-    { where : { id: `${req.params.id}`}}
-    )
+  Gallery.destroy( {
+    where : {
+      id: `${req.params.id}`
+      }
+    }
+  )
   .then(function() {
     res.redirect(303, '/gallery');
   });

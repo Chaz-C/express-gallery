@@ -1,3 +1,58 @@
-div {
-  color: green;
+//desktop dimensions: 938 x 1078
+//desktop main pic: 730 x 300
+//desktop small pics: 230 x 160
+
+//top n bottom spaces: 75px
+//header height: 70px
+
+@import './partials/reset';
+@import './partials/clearfix';
+@import './partials/mixins';
+
+//Variables
+$dark-grey: #7C777B;
+$medium-grey: #A4A4A5;
+$light-grey: #C7C7C7;
+
+.error-msg {
+  color: red;
+  list-style-type: none;
+  padding: 0px;
+}
+
+body {
+  padding: 0px 100px 0px 100px;
+  margin: 0px;
+  color: $medium-grey;
+  text-align: center;
+}
+
+.top-border {
+  width: 100%;
+  height: 75px;
+  border-bottom: dotted 1px $medium-grey;
+  margin-bottom: 10px;
+}
+
+#header {
+  height: 70px;
+  width: 60%;
+  display: inline-block;
+  font-size: 4rem;
+  font-family: 'Open Sans', sans-serif;
+  color: $dark-grey;
+  // font-weight: bold;
+  letter-spacing: 2px;
+  border-right: 1px $light-grey solid;
+}
+
+#header-info {
+  height: 70px;
+  width: 35%;
+  display: inline-block;
+  // float: right;
+  color: $light-grey;
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.75rem;
+  margin-bottom: 85px;
 }

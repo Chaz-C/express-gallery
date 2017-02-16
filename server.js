@@ -12,8 +12,6 @@ const db = require('./models');
 const { Gallery } = db;
 const gallery = require('./routes/gallery-routes.js');
 
-
-
 const hbs = handlebars.create({
   extname: '.hbs',
   defaultLayout: 'app'
@@ -43,8 +41,6 @@ app.use(function (req, res, next) {
 });
 
 app.use('/gallery', gallery);
-
-
 
 app.listen(PORT, () => {
   console.log('Server listening on', PORT);

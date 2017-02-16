@@ -1,21 +1,26 @@
 module.exports = function (sequelize, DataTypes) {
   let Gallery = sequelize.define("Gallery", {
-    author: DataTypes.STRING,
-    // link: DataTypes.STRING(1234),
+    author: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "* Must have an author"
+        }
+      }
+    },
     link: {
       type: DataTypes.STRING(1234),
       validate: {
         isUrl: {
-          msg: "Link must be a URL"
+          msg: "* Link must be an URL"
         }
       }
     },
-    // description: DataTypes.STRING,
     description: {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg: "Must have a description"
+          msg: "* Must have a description"
         }
       }
     }
