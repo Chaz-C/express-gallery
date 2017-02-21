@@ -67,32 +67,77 @@ table {
   padding: 0px; }
 
 body {
-  padding: 0px 100px 0px 100px;
   margin: 0px;
-  color: #A4A4A5;
-  text-align: center; }
+  color: #A4A4A5; }
+  @media only screen and (min-width: 938px) {
+    body {
+      padding: 0px 100px 0px 100px; } }
 
 .top-border {
   width: 100%;
-  height: 75px;
-  border-bottom: dotted 1px #A4A4A5;
-  margin-bottom: 10px; }
+  height: 40px; }
+  @media only screen and (min-width: 938px) {
+    .top-border {
+      height: 75px;
+      border-bottom: dotted 1px #A4A4A5;
+      margin-bottom: 10px; } }
 
 #header {
-  height: 70px;
-  width: 60%;
-  display: inline-block;
-  font-size: 4rem;
-  font-family: 'Open Sans', sans-serif;
+  text-align: center;
   color: #7C777B;
+  font-family: 'Open Sans', sans-serif;
   letter-spacing: 2px;
-  border-right: 1px #C7C7C7 solid; }
+  font-size: 3rem;
+  margin-bottom: 35px; }
+  @media only screen and (min-width: 938px) {
+    #header {
+      font-size: 4rem;
+      height: 70px;
+      width: 60%;
+      display: inline-block;
+      border-right: 1px #C7C7C7 solid; } }
 
 #header-info {
-  height: 70px;
-  width: 35%;
-  display: inline-block;
-  color: #C7C7C7;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 0.75rem;
-  margin-bottom: 85px; }
+  display: none; }
+  @media only screen and (min-width: 938px) {
+    #header-info {
+      height: 70px;
+      width: 35%;
+      display: inline-block;
+      color: #C7C7C7;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.75rem;
+      margin-bottom: 85px; } }
+
+.author-form, .link-form, .description-form, .submit-form {
+  border: 1px #C7C7C7 solid; }
+
+.photos {
+  margin: auto;
+  height: 180px;
+  width: 300px; }
+
+.photo-detail {
+  margin: auto;
+  height: 190px;
+  width: 300px; }
+
+.photo-info {
+  width: 300px;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 10px; }
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #E5E5E5;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 80%; }
+
+.mobile-detail-box {
+  margin: auto;
+  width: 300px;
+  height: 100%; }

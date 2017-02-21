@@ -1,11 +1,10 @@
 $breakpoints: (
-  'medium': 769px,
-  'large':  938px
+  'desktop': 938px
 ) !default;
 
 @mixin respond-to($breakpoint) {
   @if map-has-key($breakpoints, $breakpoint) {
-    @media screen and (min-width: map-get($breakpoints, $breakpoint)) {
+    @media only screen and (min-width: map-get($breakpoints, $breakpoint)) {
       @content;
     }
   }

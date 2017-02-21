@@ -1,4 +1,7 @@
-<div class="top-border"></div>
+<div class="top-border">
+  <a href="/gallery/new">new post</a>
+  {{username}}
+</div>
 
 <div id="header">
   <h1>_ARCHITEKT</h1>
@@ -10,11 +13,20 @@
   quis nosalsdkfd kdls</p>
 </div>
 
+<hr>
+
 {{#each photos}}
-<img src="{{link}}" alt=""> <br>
-Author: {{author}} <br>
-Description: {{description}} <br>
+<a href="/gallery/{{id}}">
+  <div class="photos" style="background:url({{link}}); background-size: cover; background-position: center;
+  "></div>
+</a>
+<div class="photo-info">
+  Author: {{author}} <br>
+  Description: {{description}} <br>
+</div>
 {{/each}}
+
+<hr>
 
 <div class="bottom-border"></div>
 

@@ -1,5 +1,19 @@
-<img src="{{photo.link}}" alt=""><br>
-Author: {{photo.author}} <br>
-Description: {{photo.description}} <br>
-ID: {{photo.id}} <br>
+{{!-- <img src="{{photo.link}}" alt=""><br> --}}
+{{username}}
 
+<div id="header">
+  <h1>_ARCHITEKT</h1>
+</div>
+
+<div class="mobile-detail-box">
+  Author: {{photo.author}} <br>
+  <div class="photo-detail" style="background:url({{photo.link}}); background-size: cover; background-position: center;
+    "></div>
+
+  Description: {{photo.description}} <br>
+  <form action="/gallery/{{photo.id}}/?_method=DELETE" method="POST">
+    <input class="link-button" type="submit" value="delete">
+    <input type="submit" class="link-button" value="edit" formaction="/gallery/{{photo.id}}/edit/?_method=GET">
+  </form>
+
+</div>
