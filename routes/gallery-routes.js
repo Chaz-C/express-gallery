@@ -23,7 +23,7 @@ function isAuthenticated(req, res, next) { //can change function name
     loggedIn = true;
     next();
   } else {
-    console.log('YOU SUCK');
+    console.log('NOPE TRY AGAIN');
     req.flash("error-msg", "* please log in first");
     res.redirect(303, '/gallery/login');
     // next();
@@ -54,7 +54,6 @@ function getUsername(req, res, next) {
 // });
 
 router.get('/', getUsername, (req, res) => {
-  console.log('hi');
   Gallery.findAll( {
     order : [['updatedAt', 'DESC']]
   })
@@ -73,6 +72,7 @@ router.get('/', getUsername, (req, res) => {
 router.get('/new', isAuthenticated, (req, res) => {
   Gallery.findAll()
   .then(photos => {
+    photos = photos.splice(0, 3);
     res.render('new.hbs', {
       photos : photos,
       username: username,
@@ -144,7 +144,9 @@ router.post('/newuser', (req, res) => {
     password: req.body.password
   })
   .then(function() {
-    res.redirect('/gallery');
+    // res.redirect('/gallery');
+    req.flash("error-msg", "* SUCCESS!! Please log in");
+    res.redirect('/gallery/login');
   })
   .catch(err => {
     errorMsg(req, res, err);
@@ -212,7 +214,8 @@ router.get('/:id/edit', isAuthenticated, (req, res) => {
       mainPhoto : mainPhoto,
       photos : photos,
       username : username,
-      loggedIn : loggedIn
+      loggedIn : loggedIn,
+      messages : res.locals.messages()
     });
   });
 
@@ -233,8 +236,10 @@ router.put('/:id', isAuthenticated, (req, res) => {
     res.redirect(303, `/gallery/${req.params.id}`);
   })
   .catch(err => {
+    let id = req.params.id;
+    console.log('YOU SUCKKKKK');
     errorMsg(req, res, err);
-    res.redirect(303, `/gallery/${req.params.id}/edit`);
+    res.redirect(303, `/gallery/${id}/edit/`);
   });
 });
 
