@@ -12,7 +12,6 @@ const PORT = process.env.PORT || 3000;
 const CONFIG = require('./config/config.json');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-// app.use(session({ secret: 'yes'}));
 
 const db = require('./models');
 const { Gallery } = db;
@@ -42,35 +41,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// const authenticate = (username, password) => {
-//   // get user data from the DB
-//   const { USERNAME } = CONFIG;
-//   const { PASSWORD } = CONFIG;
-
-//   // check if the user is authenticated or not
-//   return ( username === USERNAME && password === PASSWORD );
-// };
-
-// passport.use(new LocalStrategy(
-//   function (username, password, done) {
-//     console.log('username, password: ', username, password);
-//     // check if the user is authenticated or not
-//     if( authenticate(username, password) ) {
-
-//       // User data from the DB
-//       const user = {
-//         name: 'Joe',
-//         role: 'admin',
-//         favColor: 'green',
-//         isAdmin: true,
-//       };
-
-//       return done(null, user); // no error, and data = user
-//     }
-//     return done(null, false); // error and authenticted = false
-//   }
-// ));
-
 passport.use(new LocalStrategy(
   function (username, password, done) {
     User.findOne( {
@@ -80,8 +50,6 @@ passport.use(new LocalStrategy(
       }
     })
     .then(function(result) {
-      // console.log(result);
-      // console.log(result.dataValues.username);
       if ( result === null ) {
         return done(null, false);
       } else {
@@ -101,7 +69,6 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
   return done(null, user);
 });
-
 
 app.get('/', (req, res) => {
   Gallery.findAll()
