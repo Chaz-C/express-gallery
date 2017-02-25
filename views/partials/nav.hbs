@@ -1,0 +1,17 @@
+<div id="top-border">
+    <a href="/gallery" class="nav-links">Index</a> |
+{{#if loggedIn}}
+
+  <a href="/gallery/new">new post</a> |
+  <a href="/gallery/logout">logout</a>
+  <p id="username">
+    signed in as: {{username}}
+  </p>
+
+  {{else}}
+    <a class="nav-links" href="/gallery/login">Log In</a>
+    <p id="username">
+      <a href="/gallery/newuser">create account</a>
+    </p>
+{{/if}}
+</div>
