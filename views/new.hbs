@@ -1,11 +1,59 @@
-<form action="/gallery" method="POST">
+<div id="top-border">
+
+  <a href="/gallery" class="nav-links">Index</a> |
+
+  {{#if loggedIn}}
+
+    <a href="/gallery/new">new post</a> |
+    <a href="/gallery/logout">logout</a>
+    <p id="username">
+      Signed in as: {{username}}
+    </p>
+
+    {{else}}
+      <a class="nav-links" href="/gallery/login">Log In</a>
+  {{/if}}
+
+</div>
+
+<div id="header">
+  <h1>_ARCHITEKT</h1>
+</div>
+
+<div id="header-info">
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut laaliqua. Ut enim ad minim veniam,
+  quis nosalsdkfd kdls</p>
+</div>
+
+
+
+<form id="forms" action="/gallery" method="POST">
   Author: <br>
-  <input class="author-form" type="text" placeholder="name" name="author" autocomplete="off" /><br>
+  <input class="text-form" type="text" placeholder="name" name="author" autocomplete="off" /><br>
   Link: <br>
-  <input class="link-form"type="text" placeholder="url" name="link" autocomplete="off" /><br>
+  <input class="text-form"type="text" placeholder="url" name="link" autocomplete="off" /><br>
   Description: <br>
-  <textarea name="description" class="description-form" cols="30" rows="10" autocomplete="off"></textarea><br>
-  <input class="submit-form" type="submit" value="Post Photo">
+  <textarea name="description" class="text-form" cols="30" rows="10" autocomplete="off"></textarea><br>
+  <input class="link-button" type="submit" value="Post Photo">
 </form>
 
+
+<div id="photo-sidebar">
+
+{{#each photos}}
+<div class="small-photo-box">
+  <a href="/gallery/{{id}}">
+    <div class="photos" style="background:url({{link}}); background-size: cover; background-position: center;
+    "></div>
+  </a>
+  <div class="author">
+    Author: {{author}}
+  </div>
+</div>
+{{/each}}
+
+</div>
+
 {{{messages}}}
+<div id="bottom-border"></div>

@@ -1,6 +1,16 @@
-<div class="top-border">
-  <a href="/gallery/new">new post</a>
-  {{username}}
+<div id="top-border">
+    <a href="/gallery" class="nav-links">Index</a> |
+{{#if loggedIn}}
+
+  <a href="/gallery/new">new post</a> |
+  <a href="/gallery/logout">logout</a>
+  <p id="username">
+    Signed in as: {{username}}
+  </p>
+
+  {{else}}
+    <a class="nav-links" href="/gallery/login">Log In</a>
+{{/if}}
 </div>
 
 <div id="header">
@@ -13,20 +23,26 @@
   quis nosalsdkfd kdls</p>
 </div>
 
+<a href="/gallery/{{mainPhoto.id}}">
+  <div id="main-photo" style="background:url({{mainPhoto.link}}); background-size: cover; background-position: center"></div>
+</a>
+
 <hr>
 
 {{#each photos}}
-<a href="/gallery/{{id}}">
-  <div class="photos" style="background:url({{link}}); background-size: cover; background-position: center;
-  "></div>
-</a>
-<div class="photo-info">
-  Author: {{author}} <br>
-  Description: {{description}} <br>
+<div class="small-photo-box">
+  <a href="/gallery/{{id}}">
+    <div class="photos" style="background:url({{link}}); background-size: cover; background-position: center;
+    "></div>
+  </a>
+  <div class="author">
+    Author: {{author}} <br>
+  </div>
 </div>
 {{/each}}
 
 <hr>
 
-<div class="bottom-border"></div>
+<div id="bottom-border"></div>
 
+{{!-- <script type="text/javascript" src="../routes/gallery-routes.js"></script> --}}

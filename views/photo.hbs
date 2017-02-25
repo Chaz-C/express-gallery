@@ -1,19 +1,64 @@
-{{!-- <img src="{{photo.link}}" alt=""><br> --}}
-{{username}}
+<div id="top-border">
+
+  <a href="/gallery" class="nav-links">Index</a> |
+
+  {{#if loggedIn}}
+
+    <a href="/gallery/new">new post</a> |
+    <a href="/gallery/logout">logout</a>
+    <p id="username">
+      Signed in as: {{username}}
+    </p>
+
+    {{else}}
+      <a class="nav-links" href="/gallery/login">Log In</a>
+  {{/if}}
+
+</div>
+
 
 <div id="header">
   <h1>_ARCHITEKT</h1>
 </div>
 
+<div id="header-info">
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut laaliqua. Ut enim ad minim veniam,
+  quis nosalsdkfd kdls</p>
+</div>
+
+
 <div class="mobile-detail-box">
-  Author: {{photo.author}} <br>
-  <div class="photo-detail" style="background:url({{photo.link}}); background-size: cover; background-position: center;
+  <p class="author">
+    Author: {{mainPhoto.author}} <br>
+  </p>
+  <div class="photo-detail" style="background:url({{mainPhoto.link}}); background-size: cover; background-position: center;
     "></div>
 
-  Description: {{photo.description}} <br>
-  <form action="/gallery/{{photo.id}}/?_method=DELETE" method="POST">
+  <div id="photo-description">
+    Description: {{mainPhoto.description}}
+  </div>
+  <form action="/gallery/{{mainPhoto.id}}/?_method=DELETE" method="POST">
     <input class="link-button" type="submit" value="delete">
-    <input type="submit" class="link-button" value="edit" formaction="/gallery/{{photo.id}}/edit/?_method=GET">
+    <input type="submit" class="link-button" value="edit" formaction="/gallery/{{mainPhoto.id}}/edit/?_method=GET">
   </form>
 
 </div>
+
+<div id="photo-sidebar">
+
+{{#each photos}}
+<div class="small-photo-box">
+  <a href="/gallery/{{id}}">
+    <div class="photos" style="background:url({{link}}); background-size: cover; background-position: center;
+    "></div>
+  </a>
+  <div class="author">
+    Author: {{author}}
+  </div>
+</div>
+{{/each}}
+
+</div>
+
+<div id="bottom-border"></div>

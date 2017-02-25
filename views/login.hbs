@@ -1,15 +1,49 @@
-<form action="/gallery/login" method="post">
+<div id="top-border">
+    <a href="/gallery" class="nav-links">Index</a>
+</div>
+
+<div id="header">
+  <h1>_ARCHITEKT</h1>
+</div>
+
+<div id="header-info">
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut laaliqua. Ut enim ad minim veniam,
+  quis nosalsdkfd kdls</p>
+</div>
+
+
+
+<form id="forms" action="/gallery/login" method="post">
     <div>
-        <label>Username:</label>
-        <input type="text" name="username"/>
+        <label>Username:</label><br>
+        <input class="text-form" type="text" name="username" autocomplete="off" />
     </div>
     <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
+        <label>Password:</label><br>
+        <input class="text-form" type="password" name="password" autocomplete="off" />
     </div>
     <div>
         <input type="submit" value="Log In"/>
     </div>
 </form>
 
-{{!-- {{{messages}}} --}}
+
+<div id="photo-sidebar">
+
+{{#each photos}}
+<div class="small-photo-box">
+  <a href="/gallery/{{id}}">
+    <div class="photos" style="background:url({{link}}); background-size: cover; background-position: center;
+    "></div>
+  </a>
+  <div class="author">
+    Author: {{author}}
+  </div>
+</div>
+{{/each}}
+
+</div>
+{{{messages}}}
+
+<div id="bottom-border"></div>

@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
 const PORT = process.env.PORT || 3000;
 
 const CONFIG = require('./config/config.json');
@@ -35,6 +36,7 @@ app.use(function (req, res, next) {
 });
 
 app.use(session({
+  store: new RedisStore(),
   secret: CONFIG.SESSION_SECRET
 }));
 app.use(passport.initialize());

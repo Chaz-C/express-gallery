@@ -7,6 +7,9 @@ const db = require('../models');
 const { Gallery } = db;
 const { User } = db;
 
+let username;
+let loggedIn = false;
+
 function errorMsg(req, res, err) {
   for (let i = 0; i < err.errors.length; i++) {
     req.flash("error-msg", err.errors[i].message);
@@ -16,62 +19,116 @@ function errorMsg(req, res, err) {
 function isAuthenticated(req, res, next) { //can change function name
   if (req.isAuthenticated()) {
     console.log('pass');
+    username = req.user.username;
+    loggedIn = true;
     next();
   } else {
     console.log('YOU SUCK');
+    req.flash("error-msg", "* please log in first");
     res.redirect(303, '/gallery/login');
+    // next();
   }
 }
 
-let username;
+function getUsername(req, res, next) {
+  if (req.user) {
+    username = req.user.username;
+    loggedIn = true;
+    next();
+  } else {
+    next();
+  }
+}
 
-router.get('/', (req, res) => {
-  Gallery.findAll()
+// router.get('/', getUsername, (req, res) => {
+//   Gallery.findAll()
+//   .then(function(photos) {
+//     let mainPhoto = photos.splice(0, 1)[0].dataValues;
+//     res.render('index', {
+//       mainPhoto : mainPhoto,
+//       photos : photos,
+//       username : username,
+//       loggedIn : loggedIn
+//     });
+//   });
+// });
+
+router.get('/', getUsername, (req, res) => {
+  console.log('hi');
+  Gallery.findAll( {
+    order : [['updatedAt', 'DESC']]
+  })
   .then(function(photos) {
+    let mainPhoto = photos.splice(0, 1)[0].dataValues;
     res.render('index', {
+      mainPhoto : mainPhoto,
       photos : photos,
-      username : username
+      username : username,
+      loggedIn : loggedIn
     });
   });
 });
 
-router.get('/new', (req, res) => {
-  res.render('new.hbs', {
-    messages: res.locals.messages()
+
+router.get('/new', isAuthenticated, (req, res) => {
+  Gallery.findAll()
+  .then(photos => {
+    res.render('new.hbs', {
+      photos : photos,
+      username: username,
+      loggedIn: loggedIn,
+      messages: res.locals.messages()
+    });
   });
 });
 
 router.get('/login', (req, res) => {
-  res.render('login');
+  Gallery.findAll()
+  .then(photos => {
+    photos = photos.splice(0, 3);
+    res.render('login', {
+      photos : photos,
+      messages : res.locals.messages()
+    });
+  });
 });
 
 router.get('/secret', isAuthenticated, (req, res) => {
   res.send('this is my secret page');
 });
 
-// router.post('/login',
-//   passport.authenticate('local',  {
-//     successRedirect: '/gallery/secret',
-//     failureRedirect: '/gallery/login',
-//     failureFlash: true })
-// );
+router.post('/login',
+  passport.authenticate('local',  {
+    successRedirect: '/gallery',
+    failureRedirect: '/gallery/login',
+    failureFlash: true })
+);
 
-router.post('/login', function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return res.redirect('/gallery/login');
-    }
-    req.logIn(user, function(err) {
-      if (err) {
-        return next(err);
-      }
-      username = user.username;
-      return res.redirect('/gallery/secret');
-    });
-  })(req, res, next);
+// router.post('/login', function(req, res, next) {
+//   passport.authenticate('local', function(err, user, info) {
+//     if (err) {
+//       return next(err);
+//     }
+//     if (!user) {
+//       return res.redirect('/gallery/login');
+//     }
+//     req.logIn(user, function(err) {
+//       if (err) {
+//         return next(err);
+//       }
+//       username = user.username;
+//       loggedIn = true;
+//       return res.redirect('/gallery');
+//     });
+//   })(req, res, next);
+// });
+
+
+router.get('/logout', isAuthenticated, (req, res) => {
+  console.log('logging out');
+  loggedIn = false;
+  req.logout();
+  res.redirect('/gallery');
 });
 
 
@@ -95,7 +152,7 @@ router.post('/newuser', (req, res) => {
   });
 });
 
-router.post('/', (req, res) => {
+router.post('/', isAuthenticated, (req, res) => {
   Gallery.create( {
     author: req.body.author,
     link: req.body.link,
@@ -110,28 +167,58 @@ router.post('/', (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', getUsername, (req, res) => {
   // Gallery.find( { where: { id : `${req.params.id}` } })
-  Gallery.findById(`${req.params.id}`)
-  .then(function(photo) {
+  Gallery.findAll( {
+    order : [['updatedAt', 'DESC']]
+  })
+  .then(function(photos) {
+    let mainPhoto = photos.filter( (element, index, array) => {
+      if (element.dataValues.id === parseInt(req.params.id)) {
+        return element;
+      }
+    })[0].dataValues;
+    photos = photos.splice(0, 3);
     res.render('photo', {
-      photo : photo,
-      username: username
+      mainPhoto : mainPhoto,
+      photos : photos,
+      username : username,
+      loggedIn : loggedIn
     });
   });
 });
 
-router.get('/:id/edit', (req, res) => {
-  Gallery.findById(`${req.params.id}`)
-  .then(function(photo) {
+router.get('/:id/edit', isAuthenticated, (req, res) => {
+  // Gallery.findById(`${req.params.id}`)
+  // .then(function(photos) {
+  //   res.render('edit', {
+  //     photos : photos,
+  //     username : username,
+  //     loggedIn : loggedIn,
+  //     messages: res.locals.messages()
+  //   });
+  // });
+  Gallery.findAll( {
+    order : [['updatedAt', 'DESC']]
+  })
+  .then(function(photos) {
+    let mainPhoto = photos.filter( (element, index, array) => {
+      if (element.dataValues.id === parseInt(req.params.id)) {
+        return element;
+      }
+    })[0].dataValues;
+    photos = photos.splice(0, 3);
     res.render('edit', {
-      photo : photo,
-      messages: res.locals.messages()
+      mainPhoto : mainPhoto,
+      photos : photos,
+      username : username,
+      loggedIn : loggedIn
     });
   });
+
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', isAuthenticated, (req, res) => {
   Gallery.update( {
     author: req.body.author,
     link: req.body.link,
@@ -151,7 +238,7 @@ router.put('/:id', (req, res) => {
   });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', isAuthenticated, (req, res) => {
   console.log("DELETED");
   Gallery.destroy( {
     where : {

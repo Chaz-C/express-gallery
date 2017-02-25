@@ -1,12 +1,67 @@
-<form action="/gallery/{{photo.id}}/?_method=PUT" method="POST">
-  <img src="{{photo.link}}" alt=""><br>
-  Author: <br>
-  <input class="author-form" type="text" placeholder="name" name="author" autocomplete="off" value={{photo.author}} /><br>
-  Link: <br>
-  <input class="link-form" type="text" placeholder="url" name="link" autocomplete="off" value="{{photo.link}}" /><br>
-  Description: <br>
-  <textarea class="description-form" name="description" id="" cols="30" rows="10" autocomplete="off" />{{photo.description}}</textarea><br>
-  <input class="submit-form" type="submit" value="Post Photo">
-</form>
+  <div id="top-border">
+    <a href="/gallery" class="nav-links">Index</a> |
+
+    {{#if loggedIn}}
+
+      <a href="/gallery/new">new post</a> |
+      <a href="/gallery/logout">logout</a>
+      <p id="username">
+        Signed in as: {{username}}
+      </p>
+      {{else}}
+        <a class="nav-links" href="/gallery/login">Log In</a>
+    {{/if}}
+</div>
+
+
+<div id="header">
+  <h1>_ARCHITEKT</h1>
+</div>
+
+<div id="header-info">
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut laaliqua. Ut enim ad minim veniam,
+  quis nosalsdkfd kdls</p>
+</div>
+
+<div id="edit-container">
+  <form id="edit-form" action="/gallery/{{mainPhoto.id}}/?_method=PUT" method="POST">
+
+  Author:
+    <input class="text-edit-form" type="text" placeholder="name" name="author" autocomplete="off" value={{mainPhoto.author}} />
+
+  <div class="mobile-detail-box">
+    <div class="photo-detail" style="background:url({{mainPhoto.link}}); background-size: cover; background-position: center;
+    "></div>
+  </div>
+
+    <br>Link:
+    <input class="text-edit-form" type="text" placeholder="url" name="link" autocomplete="off" value="{{mainPhoto.link}}" /><br>
+    Description: <br>
+    <textarea class="text-edit-form" name="description" id="" cols="47" rows="10" autocomplete="off" />{{mainPhoto.description}}</textarea><br>
+    <input class="submit-form" type="submit" value="Edit Photo">
+  </form>
+
+</div>
+
+<div id="photo-sidebar">
+  {{#each photos}}
+  <div class="small-photo-box">
+    <a href="/gallery/{{id}}">
+      <div class="photos" style="background:url({{link}}); background-size: cover; background-position: center;
+      "></div>
+    </a>
+    <div class="author">
+      Author: {{author}}
+    </div>
+  </div>
+  {{/each}}
+</div>
+
 
 {{{messages}}}
+
+
+
+
+<div id="bottom-border"></div>

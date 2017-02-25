@@ -62,30 +62,56 @@ table {
 
 /* IE7 */
 .error-msg {
+  margin-left: 20px;
+  color: red;
+  list-style-type: none;
+  padding: 0px;
+  display: inline-block; }
+
+.error {
+  margin-left: 20px;
   color: red;
   list-style-type: none;
   padding: 0px; }
 
 body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.75rem;
+  font-weight: bold;
   margin: 0px;
   color: #A4A4A5; }
   @media only screen and (min-width: 938px) {
     body {
       padding: 0px 100px 0px 100px; } }
 
-.top-border {
+#top-border {
   width: 100%;
-  height: 40px; }
+  height: 40px;
+  padding: 10px;
+  box-sizing: border-box; }
   @media only screen and (min-width: 938px) {
-    .top-border {
+    #top-border {
       height: 75px;
       border-bottom: dotted 1px #A4A4A5;
       margin-bottom: 10px; } }
+
+#bottom-border {
+  display: hidden; }
+  @media only screen and (min-width: 938px) {
+    #bottom-border {
+      display: block;
+      height: 50px;
+      width: 100%;
+      clear: both; } }
+
+#username {
+  float: right; }
 
 #header {
   text-align: center;
   color: #7C777B;
   font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
   letter-spacing: 2px;
   font-size: 3rem;
   margin-bottom: 35px; }
@@ -93,7 +119,7 @@ body {
     #header {
       font-size: 4rem;
       height: 70px;
-      width: 60%;
+      width: 55%;
       display: inline-block;
       border-right: 1px #C7C7C7 solid; } }
 
@@ -107,25 +133,118 @@ body {
       color: #C7C7C7;
       font-family: 'Open Sans', sans-serif;
       font-size: 0.75rem;
-      margin-bottom: 85px; } }
+      margin-bottom: 80px;
+      padding-left: 10px; } }
 
-.author-form, .link-form, .description-form, .submit-form {
-  border: 1px #C7C7C7 solid; }
+#forms {
+  margin-left: 45px; }
+  @media only screen and (min-width: 938px) {
+    #forms {
+      display: inline-block;
+      margin: auto;
+      margin-top: 15px; } }
+
+#edit-container {
+  margin: auto;
+  width: 300px; }
+  @media only screen and (min-width: 938px) {
+    #edit-container {
+      margin: 0px;
+      width: 480px;
+      display: inline-block; } }
+
+a {
+  color: #A4A4A5;
+  text-decoration: none; }
+  a:hover {
+    text-decoration: underline; }
+
+.text-form {
+  border: 1px #C7C7C7 solid;
+  width: 85%; }
+  @media only screen and (min-width: 938px) {
+    .text-form {
+      width: 480px;
+      margin-bottom: 10px; } }
+
+.text-edit-form {
+  border: 1px #C7C7C7 solid;
+  width: 100%; }
+  @media only screen and (min-width: 938px) {
+    .text-edit-form {
+      width: 80%;
+      margin-bottom: 10px; } }
+
+form > .link-button {
+  margin: 0px; }
+
+#main-photo {
+  margin: auto;
+  height: 150px;
+  width: 320px; }
+  @media only screen and (min-width: 938px) {
+    #main-photo {
+      width: 730px;
+      height: 300px; } }
 
 .photos {
   margin: auto;
   height: 180px;
-  width: 300px; }
+  width: 300px;
+  margin-bottom: 5px; }
+  @media only screen and (min-width: 938px) {
+    .photos {
+      width: 230px;
+      height: 160px;
+      margin-bottom: 5px; } }
+
+.small-photo-box {
+  width: 300px;
+  margin: auto; }
+  @media only screen and (min-width: 938px) {
+    .small-photo-box {
+      width: 230px;
+      display: inline-block;
+      margin-right: 21px; }
+      .small-photo-box:nth-child(3n-1) {
+        margin-right: 0px; } }
+
+#photo-sidebar {
+  display: none; }
+  @media only screen and (min-width: 938px) {
+    #photo-sidebar {
+      display: inline-block;
+      width: 230px;
+      height: 100%;
+      float: right;
+      margin-top: 27px; } }
+
+.mobile-detail-box {
+  margin: auto;
+  width: 300px;
+  height: 100%; }
+  @media only screen and (min-width: 938px) {
+    .mobile-detail-box {
+      margin: 0px;
+      width: 485px;
+      display: inline-block; } }
 
 .photo-detail {
   margin: auto;
   height: 190px;
-  width: 300px; }
+  width: 300px;
+  margin-top: 15px;
+  margin-bottom: 15px; }
+  @media only screen and (min-width: 938px) {
+    .photo-detail {
+      margin: 0px;
+      width: 485px;
+      height: 250px; } }
 
 .photo-info {
   width: 300px;
   margin: auto;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   margin-top: 10px; }
 
 hr {
@@ -136,8 +255,15 @@ hr {
   margin-top: 15px;
   margin-bottom: 15px;
   width: 80%; }
+  @media only screen and (min-width: 938px) {
+    hr {
+      width: 100%; } }
 
-.mobile-detail-box {
-  margin: auto;
-  width: 300px;
-  height: 100%; }
+.author {
+  color: #C7C7C7;
+  margin-bottom: 15px; }
+
+#photo-description {
+  color: #A4A4A5;
+  margin-top: 20px;
+  margin-bottom: 10px; }
