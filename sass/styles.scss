@@ -1,21 +1,7 @@
-//desktop dimensions: 938 x 1078
-//desktop main pic: 730 x 300
-//desktop small pics: 230 x 160
-
-//mobile dimensions: 399 x 1064
-//mobile main pic: 320 x 150
-//mobile small pics: 300 x 180
-//mobile detail pic: 300 x 190
-
-
-//top n bottom spaces: 75px
-//header height: 70px
-
 @import './partials/reset';
 @import './partials/clearfix';
 @import './partials/mixins';
 
-//Variables
 $dark-grey: #7C777B;
 $medium-grey: #A4A4A5;
 $light-grey: #C7C7C7;
@@ -96,7 +82,6 @@ body {
     height: 70px;
     width: 35%;
     display: inline-block;
-    // float: right;
     color: $light-grey;
     font-family: 'Open Sans', sans-serif;
     font-size: 0.75rem;
@@ -126,12 +111,6 @@ body {
   }
 }
 
-// #edit-form {
-//   display: inline-block;
-//   width: 300px;
-//   margin: auto;
-// }
-
 a {
   color: $medium-grey;
   text-decoration: none;
@@ -154,7 +133,6 @@ a {
 .text-edit-form {
   border: 1px $light-grey solid;
   width: 100%;
-  // margin-left: 50px;
 
   @include respond-to('desktop') {
     width: 80%;
@@ -268,7 +246,6 @@ hr {
     border-top: 1px solid #E5E5E5;
     margin-top: 15px;
     margin-bottom: 15px;
-    // padding: 0;
     width: 80%;
 
     @include respond-to('desktop') {
