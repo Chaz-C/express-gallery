@@ -1,5 +1,6 @@
-module.exports = function (sequelize, DataTypes) {
-  let User = sequelize.define("User", {
+'use strict';
+module.exports = function(sequelize, DataTypes) {
+  var User = sequelize.define('User', {
     username: {
       type: DataTypes.STRING,
       validate: {
@@ -14,6 +15,12 @@ module.exports = function (sequelize, DataTypes) {
         notEmpty: {
           msg: "* Enter a password"
         }
+      }
+    }
+  }, {
+    classMethods: {
+      associate: function(models) {
+        // associations can be defined here
       }
     }
   });

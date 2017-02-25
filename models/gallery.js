@@ -1,5 +1,6 @@
-module.exports = function (sequelize, DataTypes) {
-  let Gallery = sequelize.define("Gallery", {
+'use strict';
+module.exports = function(sequelize, DataTypes) {
+  var Gallery = sequelize.define('Gallery', {
     author: {
       type: DataTypes.STRING,
       validate: {
@@ -22,6 +23,12 @@ module.exports = function (sequelize, DataTypes) {
         notEmpty: {
           msg: "* Must have a description"
         }
+      }
+    }
+  }, {
+    classMethods: {
+      associate: function(models) {
+        // associations can be defined here
       }
     }
   });
