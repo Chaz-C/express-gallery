@@ -16,23 +16,20 @@
     <input class="link-button" type="submit" value="delete">
     <input type="submit" class="link-button" value="edit" formaction="/gallery/{{mainPhoto.id}}/edit/?_method=GET">
   </form>
-
 </div>
 
 <div id="photo-sidebar">
-
-{{#each photos}}
-<div class="small-photo-box">
-  <a href="/gallery/{{id}}">
-    <div class="photos" style="background:url({{link}}); background-size: cover; background-position: center;
-    "></div>
-  </a>
-  <div class="author">
-    Author: {{author}}
-  </div>
-</div>
-{{/each}}
-
+  {{#each photos}}
+    <div class="small-photo-box">
+      <a href="/gallery/{{id}}">
+        <div class="photos" style="background:url({{link}}); background-size: cover; background-position: center;
+        "></div>
+      </a>
+      <div class="author">
+        Author: {{author}}
+      </div>
+    </div>
+  {{/each}}
 </div>
 
 <div id="bottom-border"></div>

@@ -12,22 +12,20 @@
   <input class="link-button" type="submit" value="Post Photo">
 </form>
 
-
 <div id="photo-sidebar">
-
-{{#each photos}}
-<div class="small-photo-box">
-  <a href="/gallery/{{id}}">
-    <div class="photos" style="background:url({{link}}); background-size: cover; background-position: center;
-    "></div>
-  </a>
-  <div class="author">
-    Author: {{author}}
-  </div>
-</div>
-{{/each}}
-
+  {{#each photos}}
+    <div class="small-photo-box">
+      <a href="/gallery/{{id}}">
+        <div class="photos" style="background:url({{link}}); background-size: cover; background-position: center;
+        "></div>
+      </a>
+      <div class="author">
+        Author: {{author}}
+      </div>
+    </div>
+  {{/each}}
 </div>
 
 {{{messages}}}
+
 <div id="bottom-border"></div>
