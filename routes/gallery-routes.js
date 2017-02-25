@@ -93,8 +93,13 @@ router.get('/logout', isAuthenticated, (req, res) => {
 });
 
 router.get('/newuser', (req, res) => {
-  res.render('newuser', {
-    messages: res.locals.messages()
+  Gallery.findAll()
+  .then(photos => {
+    photos = photos.splice(0, 3);
+    res.render('newuser', {
+      photos : photos,
+      messages: res.locals.messages()
+    });
   });
 });
 
@@ -115,7 +120,7 @@ router.get('/newuser', (req, res) => {
 
 router.post('/newuser', (req, res) => {
   console.log('---NEW USER---', req.body.username);
-  console.log('---NEW USER---', req.body.password);
+  console.log('---NEW PW---', req.body.password);
 
   bcrypt.genSalt(saltRounds, function(err, salt) {
     bcrypt.hash(req.body.password, salt, function(err, hash) {
