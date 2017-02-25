@@ -8,6 +8,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const PORT = process.env.PORT || 3000;
+const bcrypt = require('bcrypt');
 
 const CONFIG = require('./config/config.json');
 const passport = require('passport');
@@ -41,26 +42,53 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// passport.use(new LocalStrategy(
+//   function (username, password, done) {
+//     User.findOne( {
+//       where: {
+//         username: username,
+//         password: password
+//       }
+//     })
+//     .then(function(result) {
+//       if ( result === null ) {
+//         return done(null, false);
+//       } else {
+//         const user = {
+//           username: `${result.dataValues.username}`
+//         };
+//         return done(null, user);
+//       }
+//     });
+//   }
+// ));
+
 passport.use(new LocalStrategy(
   function (username, password, done) {
     User.findOne( {
       where: {
-        username: username,
-        password: password
+        username: username
       }
     })
-    .then(function(result) {
-      if ( result === null ) {
+    .then(function(user) {
+      console.log(user);
+      if ( user === null ) {
         return done(null, false);
       } else {
-        const user = {
-          username: `${result.dataValues.username}`
-        };
-        return done(null, user);
+        bcrypt.compare(password, user.password)
+        .then(res => {
+          console.log(res);
+          if(res) {
+            return done(null, user);
+          } else {
+            return done(null, false);
+          }
+        });
       }
     });
   }
 ));
+
 
 passport.serializeUser(function(user, done) {
   return done(null, user);

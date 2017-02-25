@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const app = express();
 const passport = require('passport');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 
 const db = require('../models');
 const { Gallery } = db;
@@ -95,18 +98,43 @@ router.get('/newuser', (req, res) => {
   });
 });
 
+// router.post('/newuser', (req, res) => {
+//   User.create( {
+//     username: req.body.username,
+//     password: req.body.password
+//   })
+//   .then(function() {
+//     req.flash("error-msg", "* SUCCESS!! Please log in");
+//     res.redirect('/gallery/login');
+//   })
+//   .catch(err => {
+//     errorMsg(req, res, err);
+//     res.redirect(303, '/gallery/newuser');
+//   });
+// });
+
 router.post('/newuser', (req, res) => {
-  User.create( {
-    username: req.body.username,
-    password: req.body.password
-  })
-  .then(function() {
-    req.flash("error-msg", "* SUCCESS!! Please log in");
-    res.redirect('/gallery/login');
-  })
-  .catch(err => {
-    errorMsg(req, res, err);
-    res.redirect(303, '/gallery/newuser');
+  console.log('---NEW USER---', req.body.username);
+  console.log('---NEW USER---', req.body.password);
+
+  bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.hash(req.body.password, salt, function(err, hash) {
+      console.log('hash', hash);
+      User.create( {
+        username: req.body.username,
+        password: hash
+      })
+      .then(function() {
+        req.flash("error-msg", "* SUCCESS!! Please log in");
+        res.redirect('/gallery/login');
+      })
+      .catch(err => {
+        errorMsg(req, res, err);
+        res.redirect(303, '/gallery/newuser');
+      });
+
+
+    });
   });
 });
 
