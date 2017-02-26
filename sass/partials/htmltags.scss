@@ -1,0 +1,36 @@
+@import './partials/color-variables';
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin: 0px;
+  color: $medium-grey;
+
+  @include respond-to('desktop') {
+    padding: 0px 100px 0px 100px;
+  }
+}
+
+a {
+  color: $medium-grey;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #E5E5E5;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 80%;
+
+    @include respond-to('desktop') {
+      width: 100%;
+    }
+}

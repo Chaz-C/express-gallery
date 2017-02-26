@@ -1,0 +1,46 @@
+@import './partials/color-variables';
+
+#forms {
+  margin-left: 45px;
+
+  @include respond-to('desktop') {
+    display: inline-block;
+    margin: auto;
+    margin-top: 15px;
+  }
+}
+
+#edit-container {
+  margin: auto;
+  width: 300px;
+
+  @include respond-to('desktop') {
+    margin: 0px;
+    width: 480px;
+    display: inline-block;
+  }
+}
+
+.text-form {
+  border: 1px $light-grey solid;
+  width: 85%;
+
+  @include respond-to('desktop') {
+    width: 480px;
+    margin-bottom: 10px;
+  }
+}
+
+.text-edit-form {
+  border: 1px $light-grey solid;
+  width: 100%;
+
+  @include respond-to('desktop') {
+    width: 80%;
+    margin-bottom: 10px;
+  }
+}
+
+form > .link-button {
+  margin: 0px;
+}

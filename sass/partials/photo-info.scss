@@ -1,0 +1,12 @@
+@import './partials/color-variables';
+
+.author {
+  color: $light-grey;
+  margin-bottom: 15px;
+}
+
+#photo-description {
+  color: $medium-grey;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}

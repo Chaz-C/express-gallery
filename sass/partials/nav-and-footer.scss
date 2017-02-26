@@ -1,0 +1,25 @@
+@import './partials/color-variables';
+
+#top-border {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  box-sizing: border-box;
+
+  @include respond-to('desktop') {
+    height: 75px;
+    border-bottom: dotted 1px $medium-grey;
+    margin-bottom: 10px;
+  }
+}
+
+#bottom-border {
+    display: block;
+    height: 50px;
+    width: 100%;
+    clear: both;
+}
+
+#username {
+  float: right;
+}
