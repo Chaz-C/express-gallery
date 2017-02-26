@@ -6,7 +6,8 @@ How to run on your own machine
 - Run your PostgreSQL database and run `\i create-database.sql`
 - Create a new directory named `config` and add a file named `config.json` inside
   - inside of the `config.json` file, paste this and change username value to your own.
-    - ````
+    -
+````
     {
   "development": {
     "username": "--YOURUSERNAMEHERE--",
