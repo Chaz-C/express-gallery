@@ -1,3 +1,43 @@
+How to run on your own machine
+===============
+
+- Clone the repository
+- `npm install`
+- Run your PostgreSQL database and run `\i create-database.sql`
+- Create a new directory named `config` and add a file named `config.json` inside
+  - inside of the `config.json` file, paste this and change username value to your own.
+    - `{
+  "development": {
+    "username": "--YOURUSERNAMEHERE--",
+    "password": null,
+    "database": "express_gallery",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "SESSION_SECRET": "asdf"
+}
+`
+- Run `redis-server`
+- `npm start`
+- run `sequelize db:seed:all`
+- Open up a browser and navigate to `localhost:3000/gallery`
+- feel free to browse or create a new account to start posting!
+
+
 Express Gallery
 ===============
 
