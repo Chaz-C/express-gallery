@@ -39,6 +39,7 @@ How to run on your own machine
 - Open up a browser and navigate to `localhost:3000/gallery`
 - feel free to browse or create a new account to start posting!
 
+---
 
 Express Gallery
 ===============
