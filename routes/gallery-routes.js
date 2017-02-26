@@ -5,6 +5,8 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+const errorMsg = require('../lib/error-msg');
+const isAuthenticated = require('../lib/is-authenticated');
 
 const db = require('../models');
 const { Gallery } = db;
@@ -13,34 +15,11 @@ const { User } = db;
 let username;
 let loggedIn = false;
 
-function errorMsg(req, res, err) {
-  for (let i = 0; i < err.errors.length; i++) {
-    req.flash("error-msg", err.errors[i].message);
-  }
-}
-
-function isAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
+router.get('/', (req, res) => {
+  if(req.user) {
     username = req.user.username;
     loggedIn = true;
-    next();
-  } else {
-    req.flash("error-msg", "* please log in first");
-    res.redirect(303, '/gallery/login');
   }
-}
-
-function getUsername(req, res, next) {
-  if (req.user) {
-    username = req.user.username;
-    loggedIn = true;
-    next();
-  } else {
-    next();
-  }
-}
-
-router.get('/', getUsername, (req, res) => {
   Gallery.findAll( {
     order : [['updatedAt', 'DESC']]
   })
@@ -103,43 +82,43 @@ router.get('/newuser', (req, res) => {
   });
 });
 
-// router.post('/newuser', (req, res) => {
-//   User.create( {
-//     username: req.body.username,
-//     password: req.body.password
-//   })
-//   .then(function() {
-//     req.flash("error-msg", "* SUCCESS!! Please log in");
-//     res.redirect('/gallery/login');
-//   })
-//   .catch(err => {
-//     errorMsg(req, res, err);
-//     res.redirect(303, '/gallery/newuser');
-//   });
-// });
-
 router.post('/newuser', (req, res) => {
-  console.log('---NEW USER---', req.body.username);
-  console.log('---NEW PW---', req.body.password);
-
-  bcrypt.genSalt(saltRounds, function(err, salt) {
-    bcrypt.hash(req.body.password, salt, function(err, hash) {
-      console.log('hash', hash);
-      User.create( {
-        username: req.body.username,
-        password: hash
-      })
-      .then(function() {
-        req.flash("error-msg", "* SUCCESS!! Please log in");
-        res.redirect('/gallery/login');
-      })
-      .catch(err => {
-        errorMsg(req, res, err);
-        res.redirect(303, '/gallery/newuser');
-      });
-
-
-    });
+  User.findOne( {
+    where: {
+      username : `${req.body.username}`
+    }
+  })
+  .then(result => {
+    if(result === null) {
+      if ( req.body.password === req.body.password2 ) {
+        bcrypt.genSalt(saltRounds, function(err, salt) {
+          bcrypt.hash(req.body.password, salt, function(err, hash) {
+            console.log('hash', hash);
+            User.create( {
+              username: req.body.username,
+              password: hash
+            })
+            .then(function() {
+              req.flash("error-msg", "* SUCCESS!! Please log in");
+              res.redirect('/gallery/login');
+            })
+            .catch(err => {
+              errorMsg(req, res, err);
+              res.redirect(303, '/gallery/newuser');
+            });
+          });
+        });
+      } else {
+        req.flash("error-msg", "* passwords don't match");
+        res.redirect('/gallery/newuser');
+      }
+    } else {
+      req.flash("error-msg", "* username taken");
+      res.redirect('/gallery/newuser');
+    }
+  })
+  .catch(err => {
+    res.send(err);
   });
 });
 
@@ -158,7 +137,7 @@ router.post('/', isAuthenticated, (req, res) => {
   });
 });
 
-router.get('/:id', getUsername, (req, res) => {
+router.get('/:id', (req, res) => {
   Gallery.findAll( {
     order : [['updatedAt', 'DESC']]
   })

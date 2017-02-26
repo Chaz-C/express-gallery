@@ -28,7 +28,7 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(methodOverride('_method'));
-app.use(cookieParser('keyboard cat'));
+app.use(cookieParser(CONFIG.SESSION_SECRET));
 app.use(flash());
 app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res);
@@ -42,27 +42,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// passport.use(new LocalStrategy(
-//   function (username, password, done) {
-//     User.findOne( {
-//       where: {
-//         username: username,
-//         password: password
-//       }
-//     })
-//     .then(function(result) {
-//       if ( result === null ) {
-//         return done(null, false);
-//       } else {
-//         const user = {
-//           username: `${result.dataValues.username}`
-//         };
-//         return done(null, user);
-//       }
-//     });
-//   }
-// ));
-
 passport.use(new LocalStrategy(
   function (username, password, done) {
     User.findOne( {
@@ -71,13 +50,11 @@ passport.use(new LocalStrategy(
       }
     })
     .then(function(user) {
-      console.log(user);
       if ( user === null ) {
         return done(null, false);
       } else {
         bcrypt.compare(password, user.password)
         .then(res => {
-          console.log(res);
           if(res) {
             return done(null, user);
           } else {
@@ -88,7 +65,6 @@ passport.use(new LocalStrategy(
     });
   }
 ));
-
 
 passport.serializeUser(function(user, done) {
   return done(null, user);
