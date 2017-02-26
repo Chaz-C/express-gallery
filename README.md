@@ -8,7 +8,7 @@ How to run on your own machine
   - inside of the `config.json` file, paste this and change username value to your own.
     -
 ````
-    {
+{
   "development": {
     "username": "--YOURUSERNAMEHERE--",
     "password": null,
