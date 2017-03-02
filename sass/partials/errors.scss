@@ -1,16 +1,14 @@
-.error-msg {
-  margin-left: 20px;
+#messages {
   color: red;
   list-style-type: none;
   padding: 0px;
   display: inline-block;
-}
+  margin-left: 3rem;
+  margin-top: 1rem;
 
-.error {
-  margin-left: 20px;
-  color: red;
-  list-style-type: none;
-  padding: 0px;
+  @include respond-to('desktop') {
+    margin-left: 0px;
+  }
 }
 
 #error-404 {

@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING,
         validate: {
           notEmpty: {
-            msg: "* Must have a username"
+            msg: "Must have a username"
           }
         }
       },
@@ -20,7 +20,7 @@ module.exports = {
         type: Sequelize.STRING,
         validate: {
           notEmpty: {
-            msg: "* Enter a password"
+            msg: "Enter a password"
           }
         }
       },

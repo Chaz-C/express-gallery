@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg: "* Must have an author"
+          msg: "Must have an author"
         }
       }
     },
@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(1234),
       validate: {
         isUrl: {
-          msg: "* Link must be an URL"
+          msg: "Link must be an URL"
         }
       }
     },
@@ -21,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg: "* Must have a description"
+          msg: "Must have a description"
         }
       }
     }

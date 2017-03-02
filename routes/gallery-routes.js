@@ -7,19 +7,14 @@ const saltRounds = 10;
 
 const errorMsg = require('../lib/error-msg');
 const isAuthenticated = require('../lib/is-authenticated');
+const getUser = require('../lib/get-user');
 
 const db = require('../models');
 const { Gallery } = db;
 const { User } = db;
 
-let username;
-let loggedIn = false;
-
 router.get('/', (req, res) => {
-  if(req.user) {
-    username = req.user.username;
-    loggedIn = true;
-  }
+  let findUsername = getUser(req, res);
   Gallery.findAll( {
     order : [['updatedAt', 'DESC']]
   })
@@ -28,20 +23,21 @@ router.get('/', (req, res) => {
     res.render('index', {
       mainPhoto : mainPhoto,
       photos : photos,
-      username : username,
-      loggedIn : loggedIn
+      username : findUsername.username,
+      loggedIn : findUsername.loggedIn
     });
   });
 });
 
 router.get('/new', isAuthenticated, (req, res) => {
+  let findUsername = getUser(req, res);
   Gallery.findAll()
   .then(photos => {
     photos = photos.splice(0, 3);
     res.render('new.hbs', {
       photos : photos,
-      username: username,
-      loggedIn: loggedIn,
+      username: findUsername.username,
+      loggedIn: findUsername.loggedIn,
       messages: res.locals.messages()
     });
   });
@@ -89,7 +85,11 @@ router.post('/newuser', (req, res) => {
     }
   })
   .then(result => {
-    if(result === null) {
+    if ( req.body.password === "" ) {
+      req.flash("error-msg", "Please enter a username/password" );
+      return res.redirect('/gallery/newuser');
+    }
+    if (result === null) {
       if ( req.body.password === req.body.password2 ) {
         bcrypt.genSalt(saltRounds, function(err, salt) {
           bcrypt.hash(req.body.password, salt, function(err, hash) {
@@ -99,7 +99,7 @@ router.post('/newuser', (req, res) => {
               password: hash
             })
             .then(function() {
-              req.flash("error-msg", "* SUCCESS!! Please log in");
+              req.flash("error-msg", "SUCCESS!! Please log in");
               res.redirect('/gallery/login');
             })
             .catch(err => {
@@ -109,11 +109,11 @@ router.post('/newuser', (req, res) => {
           });
         });
       } else {
-        req.flash("error-msg", "* passwords don't match");
+        req.flash("error-msg", "Passwords don't match");
         res.redirect('/gallery/newuser');
       }
     } else {
-      req.flash("error-msg", "* username taken");
+      req.flash("error-msg", "Username taken");
       res.redirect('/gallery/newuser');
     }
   })
@@ -138,14 +138,12 @@ router.post('/', isAuthenticated, (req, res) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  console.log('FIRST');
+  let findUsername = getUser(req, res);
   Gallery.findAll( {
     order : [['updatedAt', 'DESC']]
   })
   .then(function(photos) {
-    console.log('IM HERE');
     let mainPhoto = photos.filter( (element, index, array) => {
-      console.log('IN THERE');
       if (element.dataValues.id === parseInt(req.params.id)) {
         return element;
       }
@@ -154,8 +152,8 @@ router.get('/:id', (req, res, next) => {
     res.render('photo', {
       mainPhoto : mainPhoto,
       photos : photos,
-      username : username,
-      loggedIn : loggedIn
+      username : findUsername.username,
+      loggedIn : findUsername.loggedIn
     });
   })
   .catch( err => {
@@ -164,6 +162,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.get('/:id/edit', isAuthenticated, (req, res) => {
+  let findUsername = getUser(req, res);
   Gallery.findAll( {
     order : [['updatedAt', 'DESC']]
   })
@@ -177,8 +176,8 @@ router.get('/:id/edit', isAuthenticated, (req, res) => {
     res.render('edit', {
       mainPhoto : mainPhoto,
       photos : photos,
-      username : username,
-      loggedIn : loggedIn,
+      username : findUsername.username,
+      loggedIn : findUsername.loggedIn,
       messages : res.locals.messages()
     });
   });

@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING,
         validate: {
           notEmpty: {
-            msg: "* Must have an author"
+            msg: "Must have an author"
           }
         }
       },
@@ -20,14 +20,14 @@ module.exports = {
         type: Sequelize.STRING(1234),
         validate: {
           isUrl: {
-            msg: "* Link must be an URL"
+            msg: "Link must be an URL"
           }
         }
       },
       description: {
         type: Sequelize.STRING,
         validate: {
-          msg: "*Must have a description"
+          msg: "Must have a description"
         }
       },
       createdAt: {

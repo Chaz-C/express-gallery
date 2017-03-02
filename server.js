@@ -19,6 +19,8 @@ const { Gallery } = db;
 const { User } = db;
 const gallery = require('./routes/gallery-routes.js');
 
+const getUser = require('./lib/get-user');
+
 const hbs = handlebars.create({
   extname: '.hbs',
   defaultLayout: 'app'
@@ -51,14 +53,14 @@ passport.use(new LocalStrategy(
     })
     .then(function(user) {
       if ( user === null ) {
-        return done(null, false);
+        return done(null, false, { message : "Invalid username/password"} );
       } else {
         bcrypt.compare(password, user.password)
         .then(res => {
           if(res) {
             return done(null, user);
           } else {
-            return done(null, false);
+            return done(null, false, { message : "Invalid username/password"} );
           }
         });
       }
@@ -85,18 +87,12 @@ app.use(express.static('public'));
 
 app.use('/gallery', gallery);
 
-// app.use(function(err, req, res, next) {
-//   console.log("HIHIHIH");
-//   if(err) {
-//     console.log("ERROR BITCH");
-//     res.render('404');
-//   }
-// });
 app.use(function(req, res, next ) {
-  console.log('hi');
-  // res.send('404');
+  let findUsername = getUser(req, res);
   res.render('error-page', {
-    layout : 'error'
+    layout : 'error',
+    username : findUsername.username,
+    loggedIn : findUsername.loggedIn
   });
 });
 
