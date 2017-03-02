@@ -157,6 +157,9 @@ router.get('/:id', (req, res, next) => {
       username : username,
       loggedIn : loggedIn
     });
+  })
+  .catch( err => {
+    next();
   });
 });
 

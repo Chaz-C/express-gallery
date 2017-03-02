@@ -12,3 +12,14 @@
   list-style-type: none;
   padding: 0px;
 }
+
+#error-404 {
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 75px;
+
+  @include respond-to('desktop') {
+    font-size: 1.5rem;
+    margin-top: 50px;
+  }
+}
