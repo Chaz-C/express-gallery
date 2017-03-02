@@ -74,16 +74,31 @@ passport.deserializeUser(function(user, done) {
   return done(null, user);
 });
 
-app.get('/', (req, res) => {
-  Gallery.findAll()
-  .then(function(photos) {
-  res.render('index', { photos : photos });
-  });
-});
+// app.get('/', (req, res) => {
+//   Gallery.findAll()
+//   .then(function(photos) {
+//   res.render('index', { photos : photos });
+//   });
+// });
 
 app.use(express.static('public'));
 
 app.use('/gallery', gallery);
+
+// app.use(function(err, req, res, next) {
+//   console.log("HIHIHIH");
+//   if(err) {
+//     console.log("ERROR BITCH");
+//     res.render('404');
+//   }
+// });
+app.use(function(req, res, next ) {
+  console.log('hi');
+  // res.send('404');
+  res.render('error-page', {
+    layout : 'error'
+  });
+});
 
 app.listen(PORT, () => {
   console.log('Server listening on', PORT);

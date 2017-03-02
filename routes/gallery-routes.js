@@ -137,12 +137,15 @@ router.post('/', isAuthenticated, (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', (req, res, next) => {
+  console.log('FIRST');
   Gallery.findAll( {
     order : [['updatedAt', 'DESC']]
   })
   .then(function(photos) {
+    console.log('IM HERE');
     let mainPhoto = photos.filter( (element, index, array) => {
+      console.log('IN THERE');
       if (element.dataValues.id === parseInt(req.params.id)) {
         return element;
       }
