@@ -18,8 +18,10 @@ const db = require('./models');
 const { Gallery } = db;
 const { User } = db;
 const gallery = require('./routes/gallery-routes.js');
+const admin = require('./routes/admin-routes.js');
 
 const getUser = require('./lib/get-user');
+const isAdmin = require('./lib/isAdmin');
 
 const hbs = handlebars.create({
   extname: '.hbs',
@@ -84,6 +86,8 @@ passport.deserializeUser(function(user, done) {
 // });
 
 app.use(express.static('public'));
+
+app.use('/admin', isAdmin, admin);
 
 app.use('/gallery', gallery);
 
